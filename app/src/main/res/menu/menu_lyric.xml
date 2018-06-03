@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/itemSearch"
+        android:icon="@drawable/ic_search"
+        android:title="@string/text_search"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/itemFontSize"
+        android:icon="@drawable/ic_format_size"
+        android:title="@string/text_size"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/itemInvertColor"
+        android:icon="@drawable/ic_invert_colors"
+        android:title="@string/text_invert_color"
+        app:showAsAction="ifRoom" />
+</menu>

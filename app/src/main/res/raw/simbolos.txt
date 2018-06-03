@@ -1,0 +1,92 @@
+POLACO
+Mayúsculas 	Ą 	Ć 	Ę 	Ł 	Ń 	Ó 	Ś 	Ź 	Ż
+HTML 	&#260; 	&#262; 	&#280; 	&#321; 	&#323; 	&Oacute; 	&#346; 	&#377; 	&#379;
+Minúsculas 	ą 	ć 	ę 	ł 	ń 	ó 	ś 	ź 	ż
+
+ALEMÁN
+    A/a: [aː]
+    Ä/ä: [ɛː]
+    B/b: [beː]
+    C/c: [t͡seː]
+    D/d: [deː]
+    E/e: [eː]
+    F/f: [ɛf]
+    G/g: [geː]
+    H/h: [haː]
+    I/i: [iː]
+    J/j: [jɔt], in Österreich auch [jeː]
+    K/k: [kaː]
+    L/l: [ɛl]
+    M/m: [ɛm]
+    N/n: [ɛn]
+    O/o: [oː]
+    Ö/ö: [øː]
+    P/p: [peː]
+    Q/q: [kuː], in Österreich [kveː] (außer in der Mathematik)
+    R/r: [ɛʁ]
+    S/s: [ɛs]
+    ẞ/ß: [ɛs't͡sɛt]
+    T/t: [teː]
+    U/u: [uː]
+    Ü/ü: [yː]
+    V/v: [faʊ]
+    W/w: [veː]
+    X/x: [ɪks]
+    Y/y: ['ʏpsilɔn]
+    Z/z: [t͡sɛt]
+
+ESPAÑOL
+    Á á     É é     Í í     Ó ó     Ú ú     Ü ü     Ñ ñ
+
+FRANCÉS
+    A a 	B b 	C c 	D d 	E e 	F f 	G g 	H h 	I i 	J j 	K k 	L l 	M m
+    N n 	O o 	P p 	Q q 	R r 	S s 	T t 	U u 	V v 	W w 	X x 	Y y 	Z z
+    Alfabeto propio — 16 letras À à 	Â â 	Æ æ 	Ç ç 	É é 	È è 	Ê ê 	Ë ë
+    Î î 	Ï ï 	Ô ô 	Œ œ 	Ù ù 	Û û 	Ü ü 	Ÿ ÿ
+
+PORTUGUÉS
+    Áá, Àà, Ââ, Ãã
+    Éé, Êê
+    Íí
+    Óó, Ôô, Õõ
+    Úú
+
+NORUEGO
+    a 	/ɑ/ 	Abierta posterior no redondeada
+    ai 	/ɑɪ/
+    au 	/æʉ/
+    e (breve) 	/ɛ/, /æ/ 	Semiabierta anterior no redondeada
+    e (larga) 	/e/, /æ/ 	Semicerrada anterior no redondeada
+    e (débil) 	/ə/ 	Intermedia central no redondeada (schwa)
+    ei 	/æɪ/, /ɛɪ/
+    i (breve) 	/ɪ/ 	Cerrada anterior no redondeada
+    i (larga) 	/i/ 	Cerrada anterior no redondeada
+    o 	/u/ a veces /o, ɔ/ 	Cerrada posterior redondeada
+    oi 	/ɔʏ/
+    u 	/ʉ/, /u/ 	Cerrada central redondeada (cerrada anterior extra redondeada)
+    y (breve) 	/ʏ/ 	Cerrada anterior redondeada (cerrada anterior menos redondeada)
+    y (larga) 	/y/ 	Cerrada anterior redondeada (cerrada anterior menos redondeada)
+    æ 	/æ/, /ɛ/ 	Semiabierta anterior no redondeada
+    ø 	/ø/ 	Semicerrada anterior redondeada
+    øy 	/øʏ/
+    å 	/ɔ/ 	Semiabierta posterior redondeada
+
+SAMI
+    А а 	Â â 	B b 	C c 	Č č 	Ʒ ʒ 	Ǯ ǯ 	D d
+    Đ đ 	E e 	F f 	G g 	Ǧ ǧ 	Ǥ ǥ 	H h 	I i
+    J j 	K k 	Ǩ ǩ 	L l 	M m 	N n 	Ŋ ŋ 	O o
+    Õ õ 	P p 	(Q q) 	R r 	S s 	Š š 	T t 	U u
+    V v 	(W w) 	(X x) 	(Y y) 	Z z 	Ž ž 	Å å 	Ä ä
+    (Ö ö) 	ˊ
+
+VIETNAMITA
+    Empty - Ngang or Bằng 	A a, Ă ă, Â â, E e, Ê ê, I i, O o, Ô ô, Ơ ơ, U u, Ư ư, Y y 	Unmarked vowels are pronounced with a level voice, in the middle of the speaking range.
+    Lifting - Sắc 	Á á, Ắ ắ, Ấ ấ, É é, Ế ế, Í í, Ó ó, Ố ố, Ớ ớ, Ú ú, Ứ ứ, Ý ý 	The lifting mark tells the speaker to start normal and lift.
+    Falling - Huyền 	À à, Ằ ằ, Ầ ầ, È è, Ề ề, Ì ì, Ò ò, Ồ ồ, Ờ ờ, Ù ù, Ừ ừ, Ỳ ỳ 	The falling mark tells the speaker to start normal and drop the sound.
+    Turning - Hỏi 	Ả ả, Ẳ ẳ, Ẩ ẩ, Ẻ ẻ, Ể ể, Ỉ ỉ, Ỏ ỏ, Ổ ổ, Ở ở, Ủ ủ, Ử ử, Ỷ ỷ 	The turning mark tells the speaker to start low, then drop, and finally lift.
+    Breaking - Ngã 	Ã ã, Ẵ ẵ, Ẫ ẫ, Ẽ ẽ, Ễ ễ, Ĩ ĩ, Õ õ, Ỗ ỗ, Ỡ ỡ, Ũ ũ, Ữ ữ, Ỹ ỹ 	A breaking mark tells the speaker to start, stop, drop, and then start again and lift.
+    Sunk - Nặng 	Ạ ạ, Ặ ặ, Ậ ậ, Ẹ ẹ, Ệ ệ, Ị ị, Ọ ọ, Ộ ộ, Ợ ợ, Ụ ụ, Ự ự, Ỵ ỵ 	The sunk mark tells the speaker start low and get a quick, sunk stop.
+
+
+H̡̫̤̤̣͉̤ͭ̓̓̇͗̎̀ơ̯̗̱̘̮͒̄̀̈ͤ̀͡w͓̲͙͖̥͉̹͋ͬ̊ͦ̂̀̚ ͎͉͖̌ͯͅͅd̳̘̿̃̔̏ͣ͂̉̕ŏ̖̙͋ͤ̊͗̓͟͜e͈͕̯̮̙̣͓͌ͭ̍̐̃͒s͙͔̺͇̗̱̿̊̇͞ ̸̤͓̞̱̫ͩͩ͑̋̀ͮͥͦ̊Z̆̊͊҉҉̠̱̦̩͕ą̟̹͈̺̹̋̅ͯĺ̡̘̹̻̩̩͋͘g̪͚͗ͬ͒o̢̖͇̬͍͇͓̔͋͊̓ ̢͈͙͂ͣ̏̿͐͂ͯ͠t̛͓̖̻̲ͤ̈ͣ͝e͋̄ͬ̽͜҉͚̭͇ͅx͎̬̠͇̌ͤ̓̂̓͐͐́͋͡ț̗̹̝̄̌̀ͧͩ̕͢ ̮̗̩̳̱̾w͎̭̤͍͇̰̄͗ͭ̃͗ͮ̐o̢̯̻̰̼͕̾ͣͬ̽̔̍͟ͅr̢̪͙͍̠̀ͅǩ̵̶̗̮̮ͪ́?̙͉̥̬͙̟̮͕ͤ̌͗ͩ̕͡
+
