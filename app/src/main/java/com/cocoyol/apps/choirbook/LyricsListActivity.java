@@ -1,6 +1,13 @@
 package com.cocoyol.apps.choirbook;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +22,8 @@ import com.cocoyol.apps.choirbook.models.Index;
 import com.cocoyol.apps.choirbook.models.Lyric;
 import com.cocoyol.apps.choirbook.ui.MarqueeToolbar;
 import com.cocoyol.apps.choirbook.utils.IndexFiles;
+import com.cocoyol.apps.choirbook.utils.Permissions;
+import com.cocoyol.apps.choirbook.utils.ReadWriteExternalStorage;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -22,11 +31,16 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.zip.Inflater;
 
+import static com.cocoyol.apps.choirbook.Consts.APP_LYRICS_FOLDER;
+import static com.cocoyol.apps.choirbook.Consts.WRITE_EXTERNAL_STORAGE;
+
 public class LyricsListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewSongs;
     private LinearLayoutManager layoutManager;
     private ElementAdapter lyricsAdapter;
+
+    private boolean externalStoragePermissionGranted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +48,6 @@ public class LyricsListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lyrics_list);
 
         MarqueeToolbar toolbar = findViewById(R.id.genericToolbar);
-        //setActionBar(toolbar);
         setSupportActionBar(toolbar);
 
         // - INICIALIZACIÓN -
@@ -106,6 +119,32 @@ public class LyricsListActivity extends AppCompatActivity {
                 }
                 Toast.makeText(this, "Archivos de ejemplo generados.", Toast.LENGTH_SHORT).show();
             }
+        }
+
+
+        ReadWriteExternalStorage readWriteExternalStorage = new ReadWriteExternalStorage(this);
+        Permissions permissions = new Permissions(this, this);
+        permissions.askForPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE);
+        //if()
+    }
+
+    private void generateDirectory() {
+        ReadWriteExternalStorage readWriteExternalStorage = new ReadWriteExternalStorage(this);
+        readWriteExternalStorage.createDirectory(APP_LYRICS_FOLDER);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case WRITE_EXTERNAL_STORAGE :
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "HECHO!!!!!", Toast.LENGTH_SHORT).show();
+                    generateDirectory();
+                } else {
+                    Toast.makeText(this, getText(R.string.text_permission_denied), Toast.LENGTH_LONG).show();
+                }
         }
     }
 }

@@ -10,4 +10,8 @@
 
     <!-- Text for code -->
     <string name="text_finish">Finish</string>
+    <string name="text_permission_is_granted">The permission has been granted.</string>
+    <string name="text_permission_denied">The permission has not been granted, this application may not work properly.</string>
+    <string name="text_permission_explanation">You should grant permission in order to this application works properly.</string>
+    <string name="text_permission_needed">Permission Needed</string>
 </resources>
