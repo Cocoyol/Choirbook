@@ -22,12 +22,12 @@ public class Permissions {
 
     public void askForPermissions(String permission, int code) {
         int permissionCheck = ContextCompat.checkSelfPermission(context, permission);
-        String message = context.getText(R.string.text_permission_explanation).toString();
+        String message = context.getString(R.string.text_permission_explanation);
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
                 requestPermission(permission, code);
             } else {
-                showExplanation(context.getText(R.string.text_permission_needed).toString(), message, permission, code);
+                showExplanation(context.getString(R.string.text_permission_needed), message, permission, code);
             }
             return;
         }

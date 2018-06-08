@@ -14,4 +14,6 @@
     <string name="text_permission_denied">The permission has not been granted, this application may not work properly.</string>
     <string name="text_permission_explanation">You should grant permission in order to this application works properly.</string>
     <string name="text_permission_needed">Permission Needed</string>
+    <string name="text_files_not_be_created">The files could not be created.</string>
+    <string name="text_storage_not_accessible">Default storage is not accessible</string>
 </resources>

@@ -1,19 +1,14 @@
 package com.cocoyol.apps.choirbook;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.widget.Toast;
 
 import com.cocoyol.apps.choirbook.adapters.ElementAdapter;
@@ -29,10 +24,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.util.zip.Inflater;
 
 import static com.cocoyol.apps.choirbook.Consts.APP_LYRICS_FOLDER;
-import static com.cocoyol.apps.choirbook.Consts.WRITE_EXTERNAL_STORAGE;
+import static com.cocoyol.apps.choirbook.Consts.WRITE_EXTERNAL_STORAGE_CODE;
 
 public class LyricsListActivity extends AppCompatActivity {
 
@@ -121,16 +115,44 @@ public class LyricsListActivity extends AppCompatActivity {
             }
         }
 
-
         ReadWriteExternalStorage readWriteExternalStorage = new ReadWriteExternalStorage(this);
         Permissions permissions = new Permissions(this, this);
-        permissions.askForPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE);
-        //if()
+        permissions.askForPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE_CODE);
     }
 
     private void generateDirectory() {
         ReadWriteExternalStorage readWriteExternalStorage = new ReadWriteExternalStorage(this);
-        readWriteExternalStorage.createDirectory(APP_LYRICS_FOLDER);
+
+        if (!readWriteExternalStorage.isExternalStorageWritable() || !readWriteExternalStorage.isExternalStorageReadable()) {
+            Toast.makeText(this, getString(R.string.text_storage_not_accessible), Toast.LENGTH_LONG).show();
+        } else if (!readWriteExternalStorage.isDirectory(APP_LYRICS_FOLDER)) {
+            if (!readWriteExternalStorage.createDirectory(APP_LYRICS_FOLDER)) {
+                Toast.makeText(this, getString(R.string.text_files_not_be_created), Toast.LENGTH_LONG).show();
+            }
+        } else {
+            boolean newFile = false;
+            Field[] fields = R.raw.class.getFields();
+            if (fields.length > 0 && readWriteExternalStorage.isEmptyDirectory(APP_LYRICS_FOLDER)) {
+                for (Field field : fields) {
+                    String filename = field.getName().replaceAll("_", " ") + ".txt";
+                    try {
+                        InputStream inputStream = getResources().openRawResource(field.getInt(field));
+                        byte[] inputBuffer = new byte[inputStream.available()];
+
+                        inputStream.read(inputBuffer);
+                        if(!readWriteExternalStorage.exists(APP_LYRICS_FOLDER + APP_LYRICS_FOLDER + File.separator + filename)) {
+                            readWriteExternalStorage.writeToTextFile(inputBuffer, APP_LYRICS_FOLDER + File.separator + filename);
+                            newFile = true;
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                if(newFile)
+                    Toast.makeText(this, "Example files was generated.", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
@@ -138,9 +160,9 @@ public class LyricsListActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         switch (requestCode) {
-            case WRITE_EXTERNAL_STORAGE :
+            case WRITE_EXTERNAL_STORAGE_CODE:
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "HECHO!!!!!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this, "HECHO!!!!!", Toast.LENGTH_SHORT).show();
                     generateDirectory();
                 } else {
                     Toast.makeText(this, getText(R.string.text_permission_denied), Toast.LENGTH_LONG).show();
