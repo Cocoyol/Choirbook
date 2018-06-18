@@ -16,4 +16,5 @@
     <string name="text_permission_needed">Permission Needed</string>
     <string name="text_files_not_be_created">The files could not be created.</string>
     <string name="text_storage_not_accessible">Default storage is not accessible</string>
+    <string name="text_lyrics_storage_directory_not_exists">DThe lyrics directory doesn\'t exists, it will be created.</string>
 </resources>
