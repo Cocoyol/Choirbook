@@ -75,7 +75,7 @@ public class LyricsListActivity extends AppCompatActivity {
                         byte[] inputBuffer = new byte[inputStream.available()];
 
                         inputStream.read(inputBuffer);
-                        if(!readWriteExternalStorage.exists(APP_LYRICS_FOLDER + APP_LYRICS_FOLDER + File.separator + filename)) {
+                        if(!readWriteExternalStorage.exists(APP_LYRICS_FOLDER + File.separator + filename)) {
                             readWriteExternalStorage.writeToTextFile(inputBuffer, APP_LYRICS_FOLDER + File.separator + filename);
                             newFile = true;
                         }

@@ -47,7 +47,7 @@ public class IndexFiles {
     public void initializeIndex() {
         ArrayList<String> files = new ArrayList<>();
 
-        if (readWriteExternalStorage.isExternalStorageWritable() || !readWriteExternalStorage.isExternalStorageReadable()) {
+        if (readWriteExternalStorage.isExternalStorageAccessible()) {
             //Log.d("files", "Legible/Escribible! ");
             if(readWriteExternalStorage.exists(APP_LYRICS_FOLDER)) {
                 //Log.d("files", "Carpeta existe. ");
@@ -92,7 +92,7 @@ public class IndexFiles {
             String[] tokens;
             for (String file : files) {
                 tokens = file.split("\\.(?=[^\\.]+$)");
-                index.addLyric(new Lyric(tokens[0], file));
+                index.addLyric(new Lyric(tokens[0], APP_LYRICS_FOLDER + SEPARATOR + file));
                 //Log.d("filesI", file);
             }
         }

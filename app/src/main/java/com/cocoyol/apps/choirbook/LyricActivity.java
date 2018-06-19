@@ -1,5 +1,6 @@
 package com.cocoyol.apps.choirbook;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -20,10 +21,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import com.cocoyol.apps.choirbook.ui.MarqueeToolbar;
 import com.cocoyol.apps.choirbook.utils.Helpers;
-import com.cocoyol.apps.choirbook.utils.ReadWriteFileManager;
+import com.cocoyol.apps.choirbook.utils.ReadWriteExternalStorage;
 
 public class LyricActivity extends AppCompatActivity {
 
@@ -41,12 +43,21 @@ public class LyricActivity extends AppCompatActivity {
     public boolean invertColor;
     public boolean invertedColor;
 
+    @SuppressLint("StringFormatInvalid")
     private String readFile(String path) {
         String s = "";
         if(path != null && !path.isEmpty()){
-            ReadWriteFileManager readWriteFileManager = new ReadWriteFileManager();
-            String tmp = readWriteFileManager.readFromTextFile(getBaseContext(), path);
-            if(tmp != null) s = tmp.replace("\u0000", "");
+            ReadWriteExternalStorage readWriteExternalStorage = new ReadWriteExternalStorage(this);
+            if(readWriteExternalStorage.isExternalStorageAccessible()) {
+                if(readWriteExternalStorage.exists(path)) {
+                    String tmp = readWriteExternalStorage.readFromTextFile(path);
+                    if (tmp != null) s = tmp.replace("\u0000", "");
+                } else {
+                    Toast.makeText(this, String.format(getString(R.string.text_file_does_not_exist), path), Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(this, getString(R.string.text_storage_not_accessible), Toast.LENGTH_SHORT).show();
+            }
         }
         return s;
     }
@@ -83,16 +94,21 @@ public class LyricActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Restore instances when change Theme
         restoreInstanceStateVariables(savedInstanceState);
 
+        // Set themes
         toggleActivityTheme();
         setTheme(theme);
         setContentView(R.layout.activity_lyric);
 
+        // Setup Toolbar
         toolbar = findViewById(R.id.genericToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // Setup WebView
         webViewLyric = findViewById(R.id.webViewLyric);
         webViewLyric.setBackgroundColor(Color.TRANSPARENT);
         webViewLyric.setWebChromeClient(new WebChromeClient());
@@ -100,6 +116,7 @@ public class LyricActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDefaultFontSize(selectDefaultFontSize(defaultFontSizeIdx));
 
+        // Show Activity content
         lyricBundle = getIntent().getExtras();
         if(lyricBundle != null) {
             String fullFileName = lyricBundle.getString("fullFileName");
@@ -304,4 +321,33 @@ public class LyricActivity extends AppCompatActivity {
         }
 
     }
+
+    // ** INMERSIVE MODE **
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            hideSystemUI();
+        }
+    }
+
+    private void hideSystemUI() {
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_IMMERSIVE
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN);
+    }
+
+    private void showSystemUI() {
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+    }
+
 }

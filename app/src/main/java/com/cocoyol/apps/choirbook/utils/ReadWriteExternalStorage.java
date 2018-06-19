@@ -35,6 +35,10 @@ public class ReadWriteExternalStorage {
         return Environment.MEDIA_MOUNTED.equals(state) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
     }
 
+    public boolean isExternalStorageAccessible() {
+        return (isExternalStorageReadable() && isExternalStorageWritable());
+    }
+
     public boolean exists(String fileName) {
         File file = new File(Environment.getExternalStorageDirectory() + SEPARATOR + fileName);
         return file.exists();
