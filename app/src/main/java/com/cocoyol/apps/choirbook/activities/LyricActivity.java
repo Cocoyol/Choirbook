@@ -1,4 +1,4 @@
-package com.cocoyol.apps.choirbook;
+package com.cocoyol.apps.choirbook.activities;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -23,6 +23,7 @@ import android.widget.SearchView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.cocoyol.apps.choirbook.R;
 import com.cocoyol.apps.choirbook.ui.MarqueeToolbar;
 import com.cocoyol.apps.choirbook.utils.Helpers;
 import com.cocoyol.apps.choirbook.utils.ReadWriteExternalStorage;

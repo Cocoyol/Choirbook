@@ -12,17 +12,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LyricsListActivity">
+        <activity
+            android:name=".activities.SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LyricActivity"
+        <activity android:name=".activities.LyricsListActivity">
+        </activity>
+        <activity
+            android:name=".activities.LyricActivity"
             android:launchMode="singleTop"
-            android:parentActivityName=".LyricsListActivity"
-            android:screenOrientation="portrait" >
+            android:parentActivityName=".activities.LyricsListActivity"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

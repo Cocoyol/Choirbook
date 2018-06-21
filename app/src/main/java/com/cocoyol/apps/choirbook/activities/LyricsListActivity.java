@@ -1,4 +1,4 @@
-package com.cocoyol.apps.choirbook;
+package com.cocoyol.apps.choirbook.activities;
 
 import android.Manifest;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.widget.Toast;
 
+import com.cocoyol.apps.choirbook.R;
 import com.cocoyol.apps.choirbook.adapters.ElementAdapter;
 import com.cocoyol.apps.choirbook.adapters.VerticalDividerItemDecoration;
 import com.cocoyol.apps.choirbook.models.Index;
@@ -22,7 +23,6 @@ import com.cocoyol.apps.choirbook.utils.Permissions;
 import com.cocoyol.apps.choirbook.utils.ReadWriteExternalStorage;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 
@@ -35,6 +35,8 @@ public class LyricsListActivity extends AppCompatActivity {
     private LinearLayoutManager layoutManager;
     private ElementAdapter lyricsAdapter;
 
+    private Bundle indexBundle;
+
     private boolean externalStoragePermissionGranted = false;
 
     @Override
@@ -45,11 +47,10 @@ public class LyricsListActivity extends AppCompatActivity {
         MarqueeToolbar toolbar = findViewById(R.id.genericToolbar);
         setSupportActionBar(toolbar);
 
-        cpExamples();
-
+        setupDefaultLyrics();
     }
 
-    private void cpExamples() {
+    private void setupDefaultLyrics() {
         Permissions permissions = new Permissions(this, this);
         permissions.askForPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE_CODE);
     }
@@ -96,8 +97,6 @@ public class LyricsListActivity extends AppCompatActivity {
         IndexFiles indexFiles = new IndexFiles(this);
         indexFiles.initializeIndex();
         final Index index = indexFiles.getIndex();
-
-        Log.d("MeSSage", " - "+index.getLyrics().size());
 
         // - LOAD VIEW (Recycler View) -
         recyclerViewSongs = findViewById(R.id.recyclerViewSongs);
