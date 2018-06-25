@@ -3,6 +3,7 @@ package com.cocoyol.apps.choirbook.utils;
 import android.content.Context;
 import android.util.Pair;
 
+import java.text.Collator;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,13 +15,9 @@ import java.util.regex.Pattern;
 public class Helpers {
 
     public static ArrayList<String> sortStringArray(ArrayList<String> arrayList) {
-        Collections.sort(arrayList, new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                return o1.compareToIgnoreCase(o2);
-            }
-        });
-
+        Collator coll = Collator.getInstance();
+        coll.setStrength(Collator.PRIMARY);
+        Collections.sort(arrayList, coll);
         return arrayList;
     }
 

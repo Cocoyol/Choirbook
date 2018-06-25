@@ -12,15 +12,32 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class ReadWriteFileManager {
-    public ReadWriteFileManager() {
+
+    private Context context;
+
+    private String SEPARATOR;
+
+    public ReadWriteFileManager(Context context) {
+        this.context = context;
+        this.SEPARATOR = File.separator;
     }
 
-    public boolean exists(Context context, String fileName) {
-        File file = new File(context.getFilesDir().getPath() + File.separator + fileName);
+    public boolean exists(String fileName) {
+        File file = new File(context.getFilesDir().getPath() + SEPARATOR + fileName);
         return file.exists();
     }
 
-    public String readFromTextFile(Context context, String fileName) {
+    public boolean isDirectory (String dirName) {
+        File file = new File(context.getFilesDir().getPath() + SEPARATOR + dirName);
+        return file.isDirectory();
+    }
+
+    public boolean isEmptyDirectory (String dirName) {
+        File file = new File(context.getFilesDir().getPath() + SEPARATOR + dirName);
+        return file.list().length == 0;
+    }
+
+    public String readFromTextFile(String fileName) {
 
         FileInputStream fileInputStream;
         InputStreamReader inputStreamReader;
@@ -29,7 +46,7 @@ public class ReadWriteFileManager {
         String fileContent = null;
 
         try {
-            File file = new File(context.getFilesDir().getPath() + File.separator + fileName);
+            File file = new File(context.getFilesDir().getPath() + SEPARATOR + fileName);
             if (file.exists()) {
                 inputBuffer = new char[(int) file.length()];
 
@@ -57,13 +74,13 @@ public class ReadWriteFileManager {
         return fileContent;
     }
 
-    public boolean writeToTextFile(Context context, byte[] data, String fileName) {
+    public boolean writeToTextFile(byte[] data, String fileName) {
 
         FileOutputStream fileOutputStream;
         boolean result = false;
 
         try {
-            File file = new File(context.getFilesDir().getPath() + File.separator + fileName);
+            File file = new File(context.getFilesDir().getPath() + SEPARATOR + fileName);
             fileOutputStream = new FileOutputStream(file, false);
             //fileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
             fileOutputStream.write(data);
@@ -83,17 +100,17 @@ public class ReadWriteFileManager {
         return result;
     }
 
-    public <T> ArrayList<T> readArrayFromFile(Context context, String fileName) {
+    public Object readObjectFromFile(String fileName) {
         FileInputStream fileInputStream;
-        ArrayList<T> fileContent = null;
+        Object fileContent = null;
 
         try {
-            File file = new File(context.getFilesDir().getPath() + File.separator + fileName);
+            File file = new File(context.getFilesDir().getPath() + SEPARATOR + fileName);
             if (file.exists()) {
                 fileInputStream = new FileInputStream(file);
                 //fileInputStream = context.openFileInput(fileName);
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-                fileContent = (ArrayList<T>) objectInputStream.readObject();
+                fileContent = objectInputStream.readObject();
 
                 try {
                     objectInputStream.close();
@@ -109,12 +126,12 @@ public class ReadWriteFileManager {
         return fileContent;
     }
 
-    public <T> boolean writeArrayToFile(Context context, ArrayList<T> data, String fileName) {
+    public boolean writeObjectToFile(Object data, String fileName) {
 
         FileOutputStream fileOutputStream;
         boolean result = false;
         try {
-            File file = new File(context.getFilesDir().getPath() + File.separator + fileName);
+            File file = new File(context.getFilesDir().getPath() + SEPARATOR + fileName);
             fileOutputStream = new FileOutputStream(file, false);
             //fileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -137,11 +154,11 @@ public class ReadWriteFileManager {
         return result;
     }
 
-    public boolean delete(Context context, String fileName) {
+    public boolean delete(String fileName) {
 
         boolean result = true;
         try {
-            File file = new File(context.getFilesDir().getPath() + File.separator + fileName);
+            File file = new File(context.getFilesDir().getPath() + SEPARATOR + fileName);
             result = file.delete();
         } catch (Exception e) {
             e.printStackTrace();
@@ -151,8 +168,8 @@ public class ReadWriteFileManager {
         return result;
     }
 
-    public boolean createDirectory(Context context, String dirName) {
-        File dir = new File(context.getFilesDir().getPath() + File.separator + dirName);
+    public boolean createDirectory(String dirName) {
+        File dir = new File(context.getFilesDir().getPath() + SEPARATOR + dirName);
         boolean result = false;
         if (!dir.exists()) {
             try {
@@ -164,11 +181,11 @@ public class ReadWriteFileManager {
         return result;
     }
 
-    public ArrayList<String> listFilesInDirectory(Context context, String dirName) {
+    public ArrayList<String> listFilesInDirectory(String dirName) {
 
         ArrayList<String> files = new ArrayList<String>();
-        File dir = new File(context.getFilesDir().getPath() + File.separator + dirName);
-        //Log.d("MENSAJE10", context.getFilesDir().getPath() + File.separator + dirName);
+        File dir = new File(context.getFilesDir().getPath() + SEPARATOR + dirName);
+        //Log.d("MENSAJE10", context.getFilesDir().getPath() + SEPARATOR + dirName);
         if (dir.exists()) {
             for (File file : dir.listFiles()) {
                 try {
@@ -181,9 +198,9 @@ public class ReadWriteFileManager {
         return files;
     }
 
-    public boolean clearDirectory(Context context, String dirName) {
+    public boolean clearDirectory(String dirName) {
 
-        File dir = new File(context.getFilesDir().getPath() + File.separator + dirName);
+        File dir = new File(context.getFilesDir().getPath() + SEPARATOR + dirName);
 
         boolean result = false;
         if (dir.exists()) {

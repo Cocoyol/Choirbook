@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.widget.Toast;
 
@@ -26,13 +25,17 @@ import java.io.File;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 
+import in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView;
+
 import static com.cocoyol.apps.choirbook.Consts.APP_LYRICS_FOLDER;
 import static com.cocoyol.apps.choirbook.Consts.WRITE_EXTERNAL_STORAGE_CODE;
 
 public class LyricsListActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerViewSongs;
+    //private RecyclerView recyclerViewSongs;
+    private IndexFastScrollRecyclerView indexFastScrollRecyclerView;
     private LinearLayoutManager layoutManager;
+    //private ElementAdapter_x lyricsAdapter;
     private ElementAdapter lyricsAdapter;
 
     private Bundle indexBundle;
@@ -99,9 +102,10 @@ public class LyricsListActivity extends AppCompatActivity {
         final Index index = indexFiles.getIndex();
 
         // - LOAD VIEW (Recycler View) -
-        recyclerViewSongs = findViewById(R.id.recyclerViewSongs);
+        indexFastScrollRecyclerView = findViewById(R.id.fast_scroller_recycler);
+        configureIndexFastScrollRecyclerView();
         layoutManager = new LinearLayoutManager(this);
-        lyricsAdapter = new ElementAdapter(index.getLyrics(), R.layout.item_linear_layout_recycler_view_song, this, new ElementAdapter.OnItemClickListener() {
+        lyricsAdapter = new ElementAdapter(index.getLyrics(), index.sectionsIndex, R.layout.item_linear_layout_recycler_view_song, this, new ElementAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Lyric song, int position) {
                 Intent intent = new Intent(LyricsListActivity.this, LyricActivity.class);
@@ -111,11 +115,24 @@ public class LyricsListActivity extends AppCompatActivity {
             }
         });
 
-        recyclerViewSongs.setLayoutManager(layoutManager);
-        recyclerViewSongs.setAdapter(lyricsAdapter);
+        indexFastScrollRecyclerView.setLayoutManager(layoutManager);
+        indexFastScrollRecyclerView.setAdapter(lyricsAdapter);
 
-        VerticalDividerItemDecoration verticalDividerItemDecoration = new VerticalDividerItemDecoration(this, (int) getResources().getDimension(R.dimen.song_list_item_icon_width), (int) getResources().getDimension(R.dimen.song_list_item_icon_margin_end));
-        recyclerViewSongs.addItemDecoration(verticalDividerItemDecoration);
+        VerticalDividerItemDecoration verticalDividerItemDecoration = new VerticalDividerItemDecoration(
+                this,
+                (int) getResources().getDimension(R.dimen.song_list_item_icon_width) + (int) getResources().getDimension(R.dimen.song_list_item_icon_margin_end),
+                (int) getResources().getDimension(R.dimen.song_list_item_icon_margin_end)
+        );
+        indexFastScrollRecyclerView.addItemDecoration(verticalDividerItemDecoration);
+    }
+
+    private void configureIndexFastScrollRecyclerView() {
+        indexFastScrollRecyclerView.setIndexbarMargin(0);
+        indexFastScrollRecyclerView.setIndexBarCornerRadius(0);
+        indexFastScrollRecyclerView.setIndexBarColor(R.color.colorIcons);
+        indexFastScrollRecyclerView.setIndexBarTextColor(R.color.colorSecondaryText);
+        indexFastScrollRecyclerView.setIndexbarHighLateTextColor(R.color.colorPrimaryText);
+        indexFastScrollRecyclerView.setIndexBarHighLateTextVisibility(true);
     }
 
     /* *****    OVERRIDES   ***** */

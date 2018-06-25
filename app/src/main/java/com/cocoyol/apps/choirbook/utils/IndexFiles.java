@@ -8,11 +8,13 @@ import com.cocoyol.apps.choirbook.models.Index;
 import com.cocoyol.apps.choirbook.models.Lyric;
 
 import java.io.File;
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import static com.cocoyol.apps.choirbook.Consts.APP_LYRICS_FOLDER;
-import static com.cocoyol.apps.choirbook.Consts.LYRICS_FILES_LIST;
-import static com.cocoyol.apps.choirbook.Consts.SHARED_PREFERENCES_INDEX;
+import static com.cocoyol.apps.choirbook.Consts.FILE_LYRICS_INDEX;
 
 public class IndexFiles {
 
@@ -21,7 +23,7 @@ public class IndexFiles {
 
     private Context context;
     private ReadWriteExternalStorage readWriteExternalStorage;
-    private ReadWriteSharedPreferences sharedPreferences;
+    private ReadWriteFileManager readWriteFileManager;
 
     private Index index;
 
@@ -30,7 +32,7 @@ public class IndexFiles {
         this.lyricsStringData = new ArrayList<>();
 
         readWriteExternalStorage = new ReadWriteExternalStorage(context);
-        sharedPreferences = new ReadWriteSharedPreferences(context, SHARED_PREFERENCES_INDEX);
+        readWriteFileManager = new ReadWriteFileManager(context);
 
         index = new Index();
         //initializeIndex();
@@ -48,14 +50,10 @@ public class IndexFiles {
         ArrayList<String> files = new ArrayList<>();
 
         if (readWriteExternalStorage.isExternalStorageAccessible()) {
-            //Log.d("files", "Legible/Escribible! ");
             if(readWriteExternalStorage.exists(APP_LYRICS_FOLDER)) {
-                //Log.d("files", "Carpeta existe. ");
-                if(sharedPreferences.contains(LYRICS_FILES_LIST)) {
-                    //Log.d("files", "Shared existe. ");
-                    files = updateIndexFile(sharedPreferences.readArrayFromSharedPreferences(LYRICS_FILES_LIST));
+                if(readWriteFileManager.exists(FILE_LYRICS_INDEX)) {
+                    files = updateIndexFile((ArrayList<String>) readWriteFileManager.readObjectFromFile(FILE_LYRICS_INDEX));
                 } else {
-                    //Log.d("files", "Shared NO existe. ");
                     files = generateIndexFile();
                 }
             } else {
@@ -68,33 +66,49 @@ public class IndexFiles {
 
     private ArrayList<String> updateIndexFile(ArrayList<String> files) {
         ArrayList<String> newFiles = readWriteExternalStorage.listFilesInDirectory(APP_LYRICS_FOLDER);
-        //Log.d("filesSize_Update", newFiles.size() +" ");
         newFiles = Helpers.sortStringArray(newFiles);
         if(!newFiles.equals(files)) {
-            sharedPreferences.writeArrayToSharedPreferences(LYRICS_FILES_LIST, files);
+            readWriteFileManager.writeObjectToFile(files, FILE_LYRICS_INDEX);
         }
         return newFiles;
     }
 
     private ArrayList<String> generateIndexFile() {
         ArrayList<String> files = readWriteExternalStorage.listFilesInDirectory(APP_LYRICS_FOLDER);
-        //Log.d("filesSize_ArrL", files.size() +" ");
         files = Helpers.sortStringArray(files);
 
-        sharedPreferences.writeArrayToSharedPreferences(LYRICS_FILES_LIST, files);
+        readWriteFileManager.writeObjectToFile(files, FILE_LYRICS_INDEX);
 
         return files;
     }
 
     private void loadIndex(ArrayList<String> files) {
-        //Log.d("filesSize_LIdx", files.size() +" ");
         if(files != null) {
             String[] tokens;
-            for (String file : files) {
-                tokens = file.split("\\.(?=[^\\.]+$)");
-                index.addLyric(new Lyric(tokens[0], APP_LYRICS_FOLDER + SEPARATOR + file));
-                //Log.d("filesI", file);
+            for (int i = 0; i < files.size(); i++) {
+
+                // Extract Names ?
+                tokens = files.get(i).split("\\.(?=[^\\.]+$)");
+                if(tokens[0].isEmpty())
+                    tokens[0] = files.get(i);
+                index.addLyric(new Lyric(tokens[0], APP_LYRICS_FOLDER + SEPARATOR + files.get(i)));
+
+                // Fill section index
+                String k = Helpers.removeAccents(Helpers.normalizeText(tokens[0].substring(0, 1))).toUpperCase();
+                if(index.sectionsIndex.containsKey(k) && !k.equals("#")) {
+                    putSectionIndex(k, i);
+                } else if(k.matches("\\d")) {
+                    putSectionIndex("#", i);
+                } else {
+                    putSectionIndex("*", i);
+                }
             }
+        }
+    }
+
+    private void putSectionIndex(String s, int i) {
+        if(index.sectionsIndex.get(s) < 0 ) {
+            index.sectionsIndex.put(s, i);
         }
     }
 }

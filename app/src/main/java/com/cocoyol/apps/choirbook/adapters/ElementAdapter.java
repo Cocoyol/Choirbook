@@ -6,27 +6,34 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.cocoyol.apps.choirbook.R;
 import com.cocoyol.apps.choirbook.models.Lyric;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
-public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ViewHolder> {
+public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ViewHolder> implements SectionIndexer{
 
     private List<Lyric> lyrics;
+    private List<Integer> sectionsPositions;
+    private LinkedHashMap<String, Integer> sectionsPositionsMap;
     private int layout;
     private Activity activity;
     private OnItemClickListener listener;
 
-    public ElementAdapter(List<Lyric> lyrics, int layout, Activity activity, OnItemClickListener listener) {
+    public ElementAdapter(List<Lyric> lyrics, LinkedHashMap<String, Integer> sectionsPositionsMap, int layout, Activity activity, OnItemClickListener listener) {
         this.lyrics = lyrics;
         this.layout = layout;
         this.activity = activity;
         this.listener = listener;
+
+        this.sectionsPositionsMap = sectionsPositionsMap;
     }
 
     @NonNull
@@ -45,6 +52,29 @@ public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ViewHold
     @Override
     public int getItemCount() {
         return lyrics.size();
+    }
+
+    @Override
+    public Object[] getSections() {
+        List<String> sections = new ArrayList<>();
+        sectionsPositions = new ArrayList<>();
+        for (Map.Entry<String, Integer> sectionPosition : sectionsPositionsMap.entrySet()) {
+            if(sectionPosition.getValue() >= 0) {
+                sections.add(sectionPosition.getKey());
+                sectionsPositions.add(sectionPosition.getValue());
+            }
+        }
+        return sections.toArray(new String[0]);
+    }
+
+    @Override
+    public int getPositionForSection(int i) {
+        return sectionsPositions.get(i);
+    }
+
+    @Override
+    public int getSectionForPosition(int i) {
+        return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
