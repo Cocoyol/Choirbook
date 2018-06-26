@@ -1,12 +1,14 @@
 package com.cocoyol.apps.choirbook.adapters;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
@@ -20,20 +22,33 @@ import java.util.Map;
 
 public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ViewHolder> implements SectionIndexer{
 
+    private Context context;
+
     private List<Lyric> lyrics;
     private List<Integer> sectionsPositions;
     private LinkedHashMap<String, Integer> sectionsPositionsMap;
+    private LinkedHashMap<Integer, String> inverseSectionsPositionsMap;
     private int layout;
     private Activity activity;
     private OnItemClickListener listener;
 
-    public ElementAdapter(List<Lyric> lyrics, LinkedHashMap<String, Integer> sectionsPositionsMap, int layout, Activity activity, OnItemClickListener listener) {
+    public ElementAdapter(Context context, List<Lyric> lyrics, LinkedHashMap<String, Integer> sectionsPositionsMap, int layout, Activity activity, OnItemClickListener listener) {
+        this.context = context;
         this.lyrics = lyrics;
         this.layout = layout;
         this.activity = activity;
         this.listener = listener;
 
         this.sectionsPositionsMap = sectionsPositionsMap;
+        this.inverseSectionsPositionsMap = inverseSectionsPositions();
+    }
+
+    private LinkedHashMap<Integer, String> inverseSectionsPositions() {
+        inverseSectionsPositionsMap = new LinkedHashMap<>();
+        for (Map.Entry<String, Integer> sectionPosition : sectionsPositionsMap.entrySet()) {
+            inverseSectionsPositionsMap.put(sectionPosition.getValue(), sectionPosition.getKey());
+        }
+        return inverseSectionsPositionsMap;
     }
 
     @NonNull
@@ -46,7 +61,15 @@ public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(lyrics.get(position), listener);
+        // Set Section title
+        boolean showSectionTitle = false;
+        String sectionTitle = "";
+        if(inverseSectionsPositionsMap.containsKey(position)) {
+            showSectionTitle = true;
+            sectionTitle = inverseSectionsPositionsMap.get(position);
+        }
+
+        holder.bind(lyrics.get(position), showSectionTitle, sectionTitle, listener);
     }
 
     @Override
@@ -79,16 +102,25 @@ public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView textViewSongName;
-        public ImageView imageViewSongLogo;
+        private TextView textViewSongName;
+        private TextView textViewSectionTitle;
+        private ImageView imageViewSongLogo;
 
-        public ViewHolder(View itemView) {
+        private ViewHolder(View itemView) {
             super(itemView);
             textViewSongName = itemView.findViewById(R.id.textViewSongName);
+            textViewSectionTitle = itemView.findViewById(R.id.textViewSectionTitle);
         }
 
-        public void bind(final Lyric lyric, final OnItemClickListener listener) {
+        private void bind(final Lyric lyric, boolean showSectionTitle, String sectionTitle, final OnItemClickListener listener) {
             this.textViewSongName.setText(lyric.getName());
+
+            textViewSectionTitle.setText(sectionTitle);
+            int topMargin = showSectionTitle ? ((int) context.getResources().getDimension(R.dimen.song_list_section_separations)) : 0;
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(itemView.getLayoutParams());
+            layoutParams.setMargins(0, topMargin, 0, 0);
+            itemView.setLayoutParams(layoutParams);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

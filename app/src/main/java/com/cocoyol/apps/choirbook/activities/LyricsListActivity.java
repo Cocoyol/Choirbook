@@ -105,7 +105,7 @@ public class LyricsListActivity extends AppCompatActivity {
         indexFastScrollRecyclerView = findViewById(R.id.fast_scroller_recycler);
         configureIndexFastScrollRecyclerView();
         layoutManager = new LinearLayoutManager(this);
-        lyricsAdapter = new ElementAdapter(index.getLyrics(), index.sectionsIndex, R.layout.item_linear_layout_recycler_view_song, this, new ElementAdapter.OnItemClickListener() {
+        lyricsAdapter = new ElementAdapter(this, index.getLyrics(), index.sectionsIndex, R.layout.item_linear_layout_recycler_view_song, this, new ElementAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Lyric song, int position) {
                 Intent intent = new Intent(LyricsListActivity.this, LyricActivity.class);
@@ -120,19 +120,20 @@ public class LyricsListActivity extends AppCompatActivity {
 
         VerticalDividerItemDecoration verticalDividerItemDecoration = new VerticalDividerItemDecoration(
                 this,
-                (int) getResources().getDimension(R.dimen.song_list_item_icon_width) + (int) getResources().getDimension(R.dimen.song_list_item_icon_margin_end),
+                (int) (getResources().getDimension(R.dimen.song_list_section_title_text_view_size) + getResources().getDimension(R.dimen.song_list_item_icon_width) + 4 * getResources().getDimension(R.dimen.song_list_item_icon_margin_end)),
                 (int) getResources().getDimension(R.dimen.song_list_item_icon_margin_end)
         );
         indexFastScrollRecyclerView.addItemDecoration(verticalDividerItemDecoration);
     }
 
     private void configureIndexFastScrollRecyclerView() {
-        indexFastScrollRecyclerView.setIndexbarMargin(0);
-        indexFastScrollRecyclerView.setIndexBarCornerRadius(0);
         indexFastScrollRecyclerView.setIndexBarColor(R.color.colorIcons);
         indexFastScrollRecyclerView.setIndexBarTextColor(R.color.colorSecondaryText);
         indexFastScrollRecyclerView.setIndexbarHighLateTextColor(R.color.colorPrimaryText);
         indexFastScrollRecyclerView.setIndexBarHighLateTextVisibility(true);
+        indexFastScrollRecyclerView.setIndexbarMargin(0);
+        indexFastScrollRecyclerView.setIndexBarCornerRadius(0);
+        //indexFastScrollRecyclerView.setIndexbarWidth(-getResources().getDimension(R.dimen.song_list_index_width));
     }
 
     /* *****    OVERRIDES   ***** */

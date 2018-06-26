@@ -7,6 +7,9 @@
     <dimen name="song_list_item_icon_height">56dp</dimen>
     <dimen name="song_list_item_icon_margin_end">16dp</dimen>
     <dimen name="song_list_item_text_size">16sp</dimen>
+    <dimen name="song_list_section_title_text_view_size">24dp</dimen>
+    <dimen name="song_list_section_separations">36dp</dimen>
+    <dimen name="song_list_index_width">48dp</dimen>
 
     <dimen name="lyric_view_symmetric_margin">10dp</dimen>
     <dimen name="lyric_view_top_bottom_margin">4dp</dimen>
