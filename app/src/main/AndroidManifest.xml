@@ -21,14 +21,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.LyricsListActivity">
-        </activity>
+        <activity
+            android:name=".activities.FavouriteLyricsActivity"
+            android:label="@string/title_activity_favourite_lyrics"
+            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".activities.LyricsListActivity"
+            android:parentActivityName=".activities.FavouriteLyricsActivity"></activity>
         <activity
             android:name=".activities.LyricActivity"
             android:launchMode="singleTop"
             android:parentActivityName=".activities.LyricsListActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Choirbook</string>
+    <string name="designer_name">Cocoyol</string>
     <string name="song_logo">Song logo</string>
     <string name="text_empty_file">Empty file.</string>
     <string name="text_menu_item_settings">Settings</string>
@@ -7,8 +8,20 @@
     <string name="text_size">Text Size</string>
     <string name="text_adjust_text_size">Adjust text size</string>
     <string name="text_invert_color">Invert Color</string>
+    <string name="text_drawer_favourites_lists">Favourites Lists</string>
+    <string name="text_drawer_full_list">All lyrics</string>
+
+    <string name="title_activity_favourite_lyrics">Favourites lists</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Choirbool</string>
+    <string name="nav_header_subtitle">by Cocoyol</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
 
     <!-- Text for code -->
+    <string name="title_activity_all_lyrics_list">All lyrics</string>
+
     <string name="text_finish">Finish</string>
     <string name="text_permission_is_granted">The permission has been granted</string>
     <string name="text_permission_denied">The permission has not been granted, this application may not work properly</string>
@@ -17,5 +30,6 @@
     <string name="text_files_not_be_created">The files could not be created.</string>
     <string name="text_storage_not_accessible">Default storage is not accessible</string>
     <string name="text_file_does_not_exist">The file \"\%1$s\" does not exist</string>
-    <string name="text_lyrics_storage_directory_not_exists">DThe lyrics directory doesn\'t exists, it will be created</string>
+    <string name="text_lyrics_storage_directory_not_exists">The lyrics directory doesn\'t exists, it will be created</string>
+
 </resources>

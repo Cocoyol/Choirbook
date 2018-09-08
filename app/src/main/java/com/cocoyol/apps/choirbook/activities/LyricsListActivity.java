@@ -49,6 +49,8 @@ public class LyricsListActivity extends AppCompatActivity {
 
         MarqueeToolbar toolbar = findViewById(R.id.genericToolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(R.string.title_activity_all_lyrics_list);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setupDefaultLyrics();
     }

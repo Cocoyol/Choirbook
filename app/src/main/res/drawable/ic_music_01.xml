@@ -5,5 +5,5 @@
             <solid android:color="@color/colorPrimaryDark" />
         </shape>
     </item>
-    <item android:top="8dp" android:left="8dp" android:right="8dp" android:bottom="8dp" android:drawable="@drawable/ic_queue_music" />
+    <item android:top="8dp" android:left="8dp" android:right="8dp" android:bottom="8dp" android:drawable="@drawable/ic_queue_music_white" />
 </layer-list>
